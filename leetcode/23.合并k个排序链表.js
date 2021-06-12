@@ -62,7 +62,63 @@
  * @param {ListNode[]} lists
  * @return {ListNode}
  */
+
+ class PriorityQueue {
+   constructor(){
+     this.queue = [];
+   }
+   isEmpty () {
+     return !this.queue.length;
+   }
+   getQueues () {
+     return this.queue;
+   }
+   enqueue (item) {
+     if (this.isEmpty()) {
+       this.queue.push(item)
+     } else {
+       let flag = false;
+       for (let i = 0; i< this.queue.length; i++ ) {
+         if (this.queue[i].val <= item.val ) {
+           this.queue.splice(i, 0, item);
+           flag = true;
+           break;
+         }
+       }
+       if(!flag) {
+         this.queue.push(item);
+       }
+     }
+   }
+
+   dequeue () {
+     return this.queue.shift();
+   }
+   front () {
+     return this.queue[0];
+   }
+ }
 var mergeKLists = function(lists) {
+
+  if (!lists.length || !lists.length) return null;
+  let dummy = new ListNode(0);
+  let priorityQuery = new PriorityQueue;
+  for (let i = 0; i < lists.length; i++) {
+    if (lists[i]) {
+      priorityQuery.enqueue(lists[i])
+    }
+  }
+  while (!priorityQuery.isEmpty()) {
+    let p = priorityQuery.front();
+    priorityQuery.dequeue();
+    dummy.next = p;
+    dummy = p;
+    if (p.next) {
+      priorityQuery.enqueue(p.next)
+    }
+  }
+
+  return dummy.next;
     
 };
 // @lc code=end
