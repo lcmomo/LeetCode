@@ -55,4 +55,3 @@ var removeNthFromEnd = function(head, n) {
   return dummy.next; // 返回去掉空值节点的链表  
 };
 // @lc code=end
-
